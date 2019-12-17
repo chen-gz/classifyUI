@@ -1,0 +1,15 @@
+/venv/
+/winVenv/
+/test_picture/
+/eButton_data/
+/dist/
+/build/
+/imu_00.hex
+/main.spec
+/log.log
+/twos2decimal.m
+/Test_read_hexFile_ebutton_imu.m
+/test.m
+/read_imu.py
+/classifyResult.png
+/.idea/
