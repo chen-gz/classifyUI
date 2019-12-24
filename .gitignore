@@ -13,3 +13,4 @@
 /read_imu.py
 /classifyResult.png
 /.idea/
+/__pycache__/

@@ -3,12 +3,13 @@
 # Form implementation generated from reading ui file 'main_window.ui',
 # licensing of 'main_window.ui' applies.
 #
-# Created: Sat Dec 14 16:55:51 2019
+# Created: Mon Dec 23 20:23:53 2019
 #      by: pyside2-uic  running on PySide2 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
 from PySide2 import QtCore, QtGui, QtWidgets
+from PySide2.QtCharts import QtCharts
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -92,11 +93,17 @@ class Ui_MainWindow(object):
         self.label_2.setGeometry(QtCore.QRect(50, 110, 191, 191))
         self.label_2.setObjectName("label_2")
         self.classifyLable = QtWidgets.QLabel(self.centralwidget)
-        self.classifyLable.setGeometry(QtCore.QRect(270, 10, 841, 371))
+        self.classifyLable.setGeometry(QtCore.QRect(20, 450, 191, 141))
         self.classifyLable.setObjectName("classifyLable")
+        self.chartView = QtCharts.QChartView()
+        self.chartView.setGeometry(QtCore.QRect(260, 40, 941, 311))
+        self.chartView.setObjectName("chartView")
+        # self.chartView = QtWidgets.QGraphicsView(self.centralwidget)
+        # self.chartView.setGeometry(QtCore.QRect(260, 40, 941, 311))
+        # self.chartView.setObjectName("chartView")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1359, 21))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1359, 17))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

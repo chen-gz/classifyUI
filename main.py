@@ -1,8 +1,9 @@
 from PySide2 import QtCore
+from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide2.QtGui import QIcon, QPixmap
-# from PySide2 import QtCharts
-import matplotlib.pyplot as plt
+from PySide2.QtCharts import QtCharts
+# import matplotlib.pyplot as plt
 
 from main_window import Ui_MainWindow
 import logging
@@ -15,7 +16,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.imgGroupNumber = 0
-        self.imgNumber = 0
+        self.imgQuantity = 0
         self.preloadQuantity = 100
         self.ui.setupUi(self)
         self.groupSize, self.imgIndex = 5, 0
@@ -28,46 +29,67 @@ class MainWindow(QMainWindow):
 
     def showClassifyChartAll(self):
         self.classifyImageAll()
-        x = list(range(1,self.imgNumber + 1))
+        x = list(range(1, self.imgQuantity + 1))
         y = []
-        for item in self.classifyAll:
-            if item is True:
-                y.append(1)
-            else:
-                y.append(0)
-        plt.plot(x,y)
-        plt.savefig("classifyResult.png")
-        w, h = self.ui.classifyLable.width(),self.ui.classifyLable.height()
-        self.ui.classifyLable.setPixmap(
-            QPixmap("classifyResult.png").scaled(w,h,QtCore.Qt.KeepAspectRatio))
+        # TODO  QChart View
+        self.chart = QtCharts.QChart()
+        self.chart.setAnimationOptions(QtCharts.QChart.AllAnimations)
+        self.series = QtCharts.QLineSeries()
 
+        self.axisX = QtCharts.QValueAxis()
+        self.axisX.setTickCount(1)
+        self.axisX.setLabelFormat("%d")
+        self.chart.addAxis(self.axisX, Qt.AlignBottom)
+        self.series.attachAxis(self.axisX)
+        # Setting Y-axis
+        self.axis_y = QtCharts.QValueAxis()
+        self.axis_y.setTickCount(1)
+        self.axis_y.setLabelFormat("%d")
+        # self.axis_y.setTitleText("Magnitude")
+        self.chart.addAxis(self.axis_y, Qt.AlignLeft)
+        self.series.attachAxis(self.axis_y)
 
+        for i in range(len(self.classifyAll)):
+            self.series.append(i, int(self.classifyAll[i]))
+            print(i, int(self.classifyAll[i]))
+        self.chart.addSeries(self.series)
+        self.ui.chartView.setChart(self.chart)
+        self.ui.chartView.show()
+
+        # self.chart.axisX()
+        # plt.plot(x, y)
+        # plt.savefig("classifyResult.png")
+        # w, h = self.ui.classifyLable.width(), self.ui.classifyLable.height()
+        # self.ui.classifyLable.setPixmap(
+        #     QPixmap("classifyResult.png").scaled(w, h, QtCore.Qt.KeepAspectRatio))
 
     def preload(self):
         self.imageSet = {}
-        for i in range(min(100, len(self.names))):
+        for i in range(self.imgGroupNumber):
             for name in self.names[i]:
-                # print(name)
                 self.imageSet[name] = QPixmap(self.filePath + '/' + name)
 
     def readImages(self):
         self.images = []
         for item in self.names[self.imgIndex]:
-            if item in self.imageSet:
-                self.images.append(self.imageSet[item])
-            else:
-                self.images.append(QPixmap(self.filePath + '/' + item))
+            self.images.append(self.imageSet[item])
+            # if item in self.imageSet:
+            #     self.images.append(self.imageSet[item])
+            # else:
+            #     self.images.append(QPixmap(self.filePath + '/' + item))
 
     def classifyImage(self):
         self.classifyResult = []
         for item in self.names[self.imgIndex]:
-            self.classifyResult.append(self.classifier.getClass(self.filePath, item))
+            self.classifyResult.append(
+                self.classifier.getClass(self.filePath, item))
 
     def classifyImageAll(self):
         self.classifyAll = []
         for item1 in self.names:
             for item in item1:
-                self.classifyAll.append(self.classifier.getClass(self.filePath, item))
+                self.classifyAll.append(
+                    self.classifier.getClass(self.filePath, item))
 
     def showImage(self):
         for i in range(len(self.images)):
@@ -88,10 +110,11 @@ class MainWindow(QMainWindow):
         names = os.listdir(self.filePath)
         namesDuplicate = names.copy()
         for item in namesDuplicate:
-            if not item.lower().endswith(".png") and not item.lower().endswith(".jpg"):
+            if not item.lower().endswith(".png") \
+                    and not item.lower().endswith(".jpg"):
                 names.remove(item)
         names.sort()
-        self.imgNumber = len(names)
+        self.imgQuantity = len(names)
         self.names = list([])
         for i in range(0, len(names), self.groupSize):
             tmp = []
@@ -101,20 +124,21 @@ class MainWindow(QMainWindow):
             self.names.append(tmp)
         self.imgGroupNumber = len(self.names)
 
+    def updateUI(self):
+        for item in self.imgLabels:
+            item.clear()
+        if self.imgGroupNumber == 0:
+            logging.error("no image")
+            return None
+        self.readImages()
+        self.showImage()
+
     def addIndex(self, cnt):
         self.imgIndex += cnt
         if self.imgIndex >= self.imgGroupNumber:
             self.imgIndex = self.imgGroupNumber - 1
         if self.imgIndex <= 0:
             self.imgIndex = 0
-
-    def updateUI(self):
-        for item in self.imgLabels:
-            item.clear()
-        if self.imgGroupNumber == 0:
-            return None
-        self.readImages()
-        self.showImage()
 
     def goNext(self):
         self.addIndex(1)
