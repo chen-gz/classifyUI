@@ -1,4 +1,4 @@
-from PySide2 import QtCore
+from PySide2 import QtCore,QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide2.QtGui import QIcon, QPixmap
@@ -26,35 +26,45 @@ class MainWindow(QMainWindow):
         self.imageSet = {}
         self.classifyResult = []
         # self.chart = QtCharts.QtCharts()
+        self.showClassifyChartAll()
 
     def showClassifyChartAll(self):
-        self.classifyImageAll()
-        x = list(range(1, self.imgQuantity + 1))
-        y = []
+        # self.classifyImageAll()
+        # x = list(range(1, self.imgQuantity + 1))
+        # y = []
         # TODO  QChart View
+        self.ui.chartView = QtCharts.QChartView()
+        self.ui.chartView.setGeometry(QtCore.QRect(260, 40, 941, 311))
+        self.ui.chartView.setObjectName("chartView")
         self.chart = QtCharts.QChart()
         self.chart.setAnimationOptions(QtCharts.QChart.AllAnimations)
         self.series = QtCharts.QLineSeries()
-
-        self.axisX = QtCharts.QValueAxis()
-        self.axisX.setTickCount(1)
-        self.axisX.setLabelFormat("%d")
-        self.chart.addAxis(self.axisX, Qt.AlignBottom)
-        self.series.attachAxis(self.axisX)
-        # Setting Y-axis
-        self.axis_y = QtCharts.QValueAxis()
-        self.axis_y.setTickCount(1)
-        self.axis_y.setLabelFormat("%d")
-        # self.axis_y.setTitleText("Magnitude")
-        self.chart.addAxis(self.axis_y, Qt.AlignLeft)
-        self.series.attachAxis(self.axis_y)
-
-        for i in range(len(self.classifyAll)):
-            self.series.append(i, int(self.classifyAll[i]))
-            print(i, int(self.classifyAll[i]))
+        self.series.append(1, 1)
+        self.series.append(2, 3)
+        self.series.append(3, 4)
         self.chart.addSeries(self.series)
         self.ui.chartView.setChart(self.chart)
         self.ui.chartView.show()
+        # self.axisX = QtCharts.QValueAxis()
+        # self.axisX.setTickCount(1)
+        # self.axisX.setLabelFormat("%d")
+        # self.chart.addAxis(self.axisX, Qt.AlignBottom)
+        # self.series.attachAxis(self.axisX)
+        # # Setting Y-axis
+        # self.axisY = QtCharts.QValueAxis()
+        # self.axisY.setTickCount(1)
+        # self.axisY.setLabelFormat("%d")
+        # # self.axis_y.setTitleText("Magnitude")
+        # self.chart.addAxis(self.axisY, Qt.AlignLeft)
+        # self.series.attachAxis(self.axisY)
+        #
+        # for i in range(len(self.classifyAll)):
+        #     self.series.append(i, int(self.classifyAll[i]))
+        #
+        # self.chart.addSeries(self.series)
+
+        # self.ui.chartView = QtCharts.QChartView(self.chart)
+        # self.ui.chartView.show()
 
         # self.chart.axisX()
         # plt.plot(x, y)
