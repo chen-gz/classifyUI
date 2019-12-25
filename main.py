@@ -1,7 +1,7 @@
-from PySide2 import QtCore,QtWidgets
+from PySide2 import QtCore, QtWidgets
 from PySide2.QtCore import Qt
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
-from PySide2.QtGui import QIcon, QPixmap
+from PySide2.QtGui import QIcon, QPixmap, QPainter
 from PySide2.QtCharts import QtCharts
 # import matplotlib.pyplot as plt
 
@@ -22,29 +22,22 @@ class MainWindow(QMainWindow):
         self.groupSize, self.imgIndex = 5, 0
         self.imgLabels = [self.ui.image1, self.ui.image2,
                           self.ui.image3, self.ui.image4, self.ui.image5]
-        self.classifier = classify()
+        # TODO:uncomment
+        #  self.classifier = classify()
         self.imageSet = {}
         self.classifyResult = []
-        # self.chart = QtCharts.QtCharts()
-        self.showClassifyChartAll()
 
     def showClassifyChartAll(self):
-        # self.classifyImageAll()
-        # x = list(range(1, self.imgQuantity + 1))
-        # y = []
-        # TODO  QChart View
-        self.ui.chartView = QtCharts.QChartView()
-        self.ui.chartView.setGeometry(QtCore.QRect(260, 40, 941, 311))
-        self.ui.chartView.setObjectName("chartView")
+        self.classifyImageAll()
         self.chart = QtCharts.QChart()
-        self.chart.setAnimationOptions(QtCharts.QChart.AllAnimations)
         self.series = QtCharts.QLineSeries()
-        self.series.append(1, 1)
-        self.series.append(2, 3)
-        self.series.append(3, 4)
+        # add data
+        for i in range(self.imgQuantity):
+            self.series.append(i, int(self.classifyResult[i]))
+        self.chart.legend().hide()
         self.chart.addSeries(self.series)
-        self.ui.chartView.setChart(self.chart)
-        self.ui.chartView.show()
+        # TODO: X and Y axis setting
+        # # Setting X-axis
         # self.axisX = QtCharts.QValueAxis()
         # self.axisX.setTickCount(1)
         # self.axisX.setLabelFormat("%d")
@@ -54,24 +47,13 @@ class MainWindow(QMainWindow):
         # self.axisY = QtCharts.QValueAxis()
         # self.axisY.setTickCount(1)
         # self.axisY.setLabelFormat("%d")
-        # # self.axis_y.setTitleText("Magnitude")
+        # self.axisY.setTitleText("Have")
         # self.chart.addAxis(self.axisY, Qt.AlignLeft)
         # self.series.attachAxis(self.axisY)
-        #
-        # for i in range(len(self.classifyAll)):
-        #     self.series.append(i, int(self.classifyAll[i]))
-        #
-        # self.chart.addSeries(self.series)
-
-        # self.ui.chartView = QtCharts.QChartView(self.chart)
-        # self.ui.chartView.show()
-
-        # self.chart.axisX()
-        # plt.plot(x, y)
-        # plt.savefig("classifyResult.png")
-        # w, h = self.ui.classifyLable.width(), self.ui.classifyLable.height()
-        # self.ui.classifyLable.setPixmap(
-        #     QPixmap("classifyResult.png").scaled(w, h, QtCore.Qt.KeepAspectRatio))
+        self.chart.createDefaultAxes()
+        self.chart.plotArea()
+        self.ui.chartView.setChart(self.chart)
+        self.ui.chartView.setRenderHint(QPainter.Antialiasing)
 
     def preload(self):
         self.imageSet = {}
@@ -95,10 +77,10 @@ class MainWindow(QMainWindow):
                 self.classifier.getClass(self.filePath, item))
 
     def classifyImageAll(self):
-        self.classifyAll = []
+        self.classifyResult = []
         for item1 in self.names:
             for item in item1:
-                self.classifyAll.append(
+                self.classifyResult.append(
                     self.classifier.getClass(self.filePath, item))
 
     def showImage(self):
