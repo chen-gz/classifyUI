@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self.imgLabels = [self.ui.image1, self.ui.image2,
                           self.ui.image3, self.ui.image4, self.ui.image5]
         # TODO:uncomment
-        #  self.classifier = classify()
+        self.classifier = classify()
         self.imageSet = {}
         self.classifyResult = []
 
@@ -37,21 +37,7 @@ class MainWindow(QMainWindow):
         self.chart.legend().hide()
         self.chart.addSeries(self.series)
         # TODO: X and Y axis setting
-        # # Setting X-axis
-        # self.axisX = QtCharts.QValueAxis()
-        # self.axisX.setTickCount(1)
-        # self.axisX.setLabelFormat("%d")
-        # self.chart.addAxis(self.axisX, Qt.AlignBottom)
-        # self.series.attachAxis(self.axisX)
-        # # Setting Y-axis
-        # self.axisY = QtCharts.QValueAxis()
-        # self.axisY.setTickCount(1)
-        # self.axisY.setLabelFormat("%d")
-        # self.axisY.setTitleText("Have")
-        # self.chart.addAxis(self.axisY, Qt.AlignLeft)
-        # self.series.attachAxis(self.axisY)
         self.chart.createDefaultAxes()
-        self.chart.plotArea()
         self.ui.chartView.setChart(self.chart)
         self.ui.chartView.setRenderHint(QPainter.Antialiasing)
 
@@ -65,10 +51,6 @@ class MainWindow(QMainWindow):
         self.images = []
         for item in self.names[self.imgIndex]:
             self.images.append(self.imageSet[item])
-            # if item in self.imageSet:
-            #     self.images.append(self.imageSet[item])
-            # else:
-            #     self.images.append(QPixmap(self.filePath + '/' + item))
 
     def classifyImage(self):
         self.classifyResult = []
