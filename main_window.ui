@@ -7,11 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>1359</width>
-    <height>893</height>
+    <height>894</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="horizontalLayoutWidget">
@@ -26,6 +29,9 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="image1">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>image1</string>
        </property>
@@ -33,6 +39,9 @@
      </item>
      <item>
       <widget class="QLabel" name="image2">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>image2</string>
        </property>
@@ -40,6 +49,9 @@
      </item>
      <item>
       <widget class="QLabel" name="image3">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>image3</string>
        </property>
@@ -47,6 +59,9 @@
      </item>
      <item>
       <widget class="QLabel" name="image4">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>image4</string>
        </property>
@@ -54,6 +69,9 @@
      </item>
      <item>
       <widget class="QLabel" name="image5">
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
        <property name="text">
         <string>image5</string>
        </property>
@@ -64,9 +82,9 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>820</x>
-      <y>690</y>
-      <width>336</width>
+      <x>800</x>
+      <y>680</y>
+      <width>340</width>
       <height>70</height>
      </rect>
     </property>
@@ -127,13 +145,13 @@
    <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>840</x>
+      <x>540</x>
       <y>780</y>
-      <width>271</width>
+      <width>421</width>
       <height>61</height>
      </rect>
     </property>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -144,7 +162,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="getPathButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
          <horstretch>0</horstretch>
@@ -159,11 +177,65 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>18</pointsize>
+         <pointsize>13</pointsize>
         </font>
        </property>
        <property name="text">
-        <string>open fold</string>
+        <string>get path</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="showImageButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>10</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Show image</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>13</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Analysis</string>
        </property>
       </widget>
      </item>
@@ -195,15 +267,58 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QGraphicsView" name="chartView">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>40</y>
-      <width>941</width>
-      <height>311</height>
+      <x>250</x>
+      <y>50</y>
+      <width>811</width>
+      <height>281</height>
      </rect>
     </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>Tab 1</string>
+     </attribute>
+     <widget class="QGraphicsView" name="chartView">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>761</width>
+        <height>251</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>Tab 2</string>
+     </attribute>
+     <widget class="QGraphicsView" name="chartView_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>761</width>
+        <height>261</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>Page</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="tab_4">
+     <attribute name="title">
+      <string>Page</string>
+     </attribute>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -212,7 +327,7 @@
      <x>0</x>
      <y>0</y>
      <width>1359</width>
-     <height>17</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
@@ -221,30 +336,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_2</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>openFoldButton()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>841</x>
-     <y>678</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>466</x>
-     <y>588</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>buttonGoBefore</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>goBefore()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>950</x>
-     <y>557</y>
+     <x>969</x>
+     <y>702</y>
     </hint>
     <hint type="destinationlabel">
      <x>787</x>
@@ -259,8 +358,8 @@
    <slot>goNext()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1030</x>
-     <y>558</y>
+     <x>1049</x>
+     <y>702</y>
     </hint>
     <hint type="destinationlabel">
      <x>892</x>
@@ -275,8 +374,8 @@
    <slot>goEnd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1110</x>
-     <y>555</y>
+     <x>1138</x>
+     <y>702</y>
     </hint>
     <hint type="destinationlabel">
      <x>1001</x>
@@ -291,8 +390,8 @@
    <slot>goHome()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>819</x>
-     <y>558</y>
+     <x>820</x>
+     <y>702</y>
     </hint>
     <hint type="destinationlabel">
      <x>574</x>
@@ -300,13 +399,45 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>getPathButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>getPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>602</x>
+     <y>824</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>567</x>
+     <y>741</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>showImageButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>showImages()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>752</x>
+     <y>828</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>706</x>
+     <y>771</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>getPath()</slot>
   <slot>goBefore()</slot>
   <slot>goNext()</slot>
   <slot>goEnd()</slot>
   <slot>goHome()</slot>
-  <slot>openFoldButton()</slot>
+  <slot>getPath()</slot>
+  <slot>showImages()</slot>
  </slots>
 </ui>
