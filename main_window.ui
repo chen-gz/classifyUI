@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1359</width>
-    <height>894</height>
+    <width>1178</width>
+    <height>888</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,8 +23,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>380</y>
+      <x>60</x>
+      <y>350</y>
       <width>941</width>
       <height>281</height>
      </rect>
@@ -82,8 +85,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>800</x>
-      <y>680</y>
+      <x>620</x>
+      <y>640</y>
       <width>340</width>
       <height>70</height>
      </rect>
@@ -145,8 +148,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>540</x>
-      <y>780</y>
+      <x>580</x>
+      <y>730</y>
       <width>421</width>
       <height>61</height>
      </rect>
@@ -213,7 +216,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="analysisButton">
        <property name="enabled">
         <bool>false</bool>
        </property>
@@ -241,43 +244,17 @@
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>110</y>
-      <width>191</width>
-      <height>191</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="classifyLable">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>450</y>
-      <width>191</width>
-      <height>141</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>250</x>
-      <y>50</y>
-      <width>811</width>
-      <height>281</height>
+      <x>40</x>
+      <y>10</y>
+      <width>821</width>
+      <height>311</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -288,36 +265,119 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>761</width>
-        <height>251</height>
+        <width>821</width>
+        <height>281</height>
        </rect>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>local</string>
      </attribute>
-     <widget class="QGraphicsView" name="chartView_2">
+     <widget class="QGraphicsView" name="chartView2">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>761</width>
-        <height>261</height>
+        <width>821</width>
+        <height>281</height>
        </rect>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>Page</string>
+      <string>acc</string>
      </attribute>
+     <widget class="QTabWidget" name="tabWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>811</width>
+        <height>271</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="tab_6">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewAcc1">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>821</width>
+          <height>251</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_8">
+       <attribute name="title">
+        <string>Page</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewAcc2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>811</width>
+          <height>241</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_7">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewAcc3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>821</width>
+          <height>251</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
-      <string>Page</string>
+      <string>gyro</string>
      </attribute>
+     <widget class="QGraphicsView" name="chartViewGyro">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>821</width>
+        <height>281</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_5">
+     <attribute name="title">
+      <string>mag</string>
+     </attribute>
+     <widget class="QGraphicsView" name="chartViewMag">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>821</width>
+        <height>281</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -326,12 +386,30 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1359</width>
+     <width>1178</width>
      <height>20</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuimu">
+    <property name="title">
+     <string>imu</string>
+    </property>
+    <addaction name="getImuPath"/>
+    <addaction name="imuDataAnalysis"/>
+   </widget>
+   <addaction name="menuimu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="getImuPath">
+   <property name="text">
+    <string>imu path</string>
+   </property>
+  </action>
+  <action name="imuDataAnalysis">
+   <property name="text">
+    <string>imu data analysis</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
@@ -342,8 +420,8 @@
    <slot>goBefore()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>969</x>
-     <y>702</y>
+     <x>789</x>
+     <y>684</y>
     </hint>
     <hint type="destinationlabel">
      <x>787</x>
@@ -358,8 +436,8 @@
    <slot>goNext()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1049</x>
-     <y>702</y>
+     <x>869</x>
+     <y>684</y>
     </hint>
     <hint type="destinationlabel">
      <x>892</x>
@@ -374,8 +452,8 @@
    <slot>goEnd()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1138</x>
-     <y>702</y>
+     <x>958</x>
+     <y>684</y>
     </hint>
     <hint type="destinationlabel">
      <x>1001</x>
@@ -390,8 +468,8 @@
    <slot>goHome()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>820</x>
-     <y>702</y>
+     <x>641</x>
+     <y>684</y>
     </hint>
     <hint type="destinationlabel">
      <x>574</x>
@@ -406,8 +484,8 @@
    <slot>getPath()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>602</x>
-     <y>824</y>
+     <x>643</x>
+     <y>799</y>
     </hint>
     <hint type="destinationlabel">
      <x>567</x>
@@ -422,12 +500,60 @@
    <slot>showImages()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>752</x>
-     <y>828</y>
+     <x>859</x>
+     <y>803</y>
     </hint>
     <hint type="destinationlabel">
      <x>706</x>
      <y>771</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>analysisButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>analysis()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>999</x>
+     <y>791</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1047</x>
+     <y>820</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>getImuPath</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>getImuPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>588</x>
+     <y>443</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>imuDataAnalysis</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ImuDataAnalysis()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>588</x>
+     <y>443</y>
     </hint>
    </hints>
   </connection>
@@ -439,5 +565,8 @@
   <slot>goHome()</slot>
   <slot>getPath()</slot>
   <slot>showImages()</slot>
+  <slot>analysis()</slot>
+  <slot>getImuPath()</slot>
+  <slot>ImuDataAnalysis()</slot>
  </slots>
 </ui>
