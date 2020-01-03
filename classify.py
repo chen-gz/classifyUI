@@ -5,6 +5,7 @@ from torchvision import models
 import torch
 from torchvision import transforms
 
+
 class classify:
     def __init__(self):
         self.transform = transforms.Compose([
@@ -22,15 +23,18 @@ class classify:
         self.resnet = models.resnet34(pretrained=True)
         self.resnet.eval()
         # self.resnet.cuda()
-    
-    def getClass(self,path,name):
+
+    def getClass(self, path, name):
+
+        csv = open(path + '/classify.csv', 'w')
         # preprocess
-        print(path)
-        print(path +'/'+name)
+        # print(path)
+        # print(path + '/' + name)
         img = Image.open(path + '/' + name)
         img_t = self.transform(img)
         batch_t = torch.unsqueeze(img_t, 0)
         # batch_t = batch_t.cuda(non_blocking=True)
+        csv.write(path + '/' + name + ' ,' + name+' ,')
 
         # get answer
         out = self.resnet(batch_t)
@@ -41,4 +45,8 @@ class classify:
         for idx in indices[0][:5]:
             if self.food_labels.get(int(idx)) != None:
                 have_food = True
+        if have_food:
+            csv.write('1\n')
+        else:
+            csv.write('0\n')
         return have_food

@@ -1,9 +1,10 @@
-from PySide2 import QtCore, QtWidgets
-from PySide2.QtCore import Qt, QTime, QDateTime
+from PySide2 import QtCore
+from PySide2.QtCore import Qt, QTime, QDateTime, QFileInfo
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
-from PySide2.QtGui import QIcon, QPixmap, QPainter, QColor
+from PySide2.QtGui import QPixmap, QPainter
 from PySide2.QtCharts import QtCharts
 from read_imu import imu
+import csv
 
 from main_window import Ui_MainWindow
 import logging
@@ -19,7 +20,9 @@ class MainWindow(QMainWindow):
         self.msg = QMessageBox()
 
         self.imgQuantity, self.imgIndex = 0, 0
-        self.imgSet = {}
+        self.imgSet, self.images = {}, []
+        self.names, self.filePath = [], ''
+        self.classifyResultSet, self.classifyResult = {}, []
 
         self.uiImageSize = 5
         self.imgLabels = [self.ui.image1, self.ui.image2,
@@ -31,16 +34,15 @@ class MainWindow(QMainWindow):
     def showClassifyChart(self):
         # whole chart
         self.classifyImage()
-        self.chart = QtCharts.QChart()
-        self.series = QtCharts.QLineSeries()
+        chart = QtCharts.QChart()
+        series = QtCharts.QLineSeries()
         # add data
         for i in range(self.imgQuantity):
-            self.series.append(i, int(self.classifyResultSet[self.names[i]]))
-        self.chart.legend().hide()
-        self.chart.addSeries(self.series)
-        # TODO: X and Y axis setting
-        self.chart.createDefaultAxes()
-        self.ui.chartView.setChart(self.chart)
+            series.append(i, int(self.classifyResultSet[self.names[i]]))
+        chart.legend().hide()
+        chart.addSeries(series)
+        chart.createDefaultAxes()
+        self.ui.chartView.setChart(chart)
         self.ui.chartView.setRenderHint(QPainter.Antialiasing)
 
     def preload(self):
@@ -83,7 +85,6 @@ class MainWindow(QMainWindow):
             seriesLocal.append(i, self.classifyResultSet[self.names[i]])
         chartLocal.legend().hide()
         chartLocal.addSeries(seriesLocal)
-        # TODO: X and Y axis setting
         chartLocal.createDefaultAxes()
         self.ui.chartView2.setChart(chartLocal)
         self.ui.chartView2.setRenderHint(QPainter.Antialiasing)
@@ -159,12 +160,31 @@ class MainWindow(QMainWindow):
             # TODO: clear all variable
             self.classifyResult = []
             self.classifyResultSet = {}
+            self.images = []
+            self.names = []
 
         # TODO: preload function should be move (other place). Maybe use new thread.
         self.preload()
 
     def analysis(self):
         # TODO: judgement folder size
+        if self.imgQuantity >= 500:
+            self.msg.setText(
+                "this folder have {} images. Maybe too many pictures. "
+                "Make sure the quantity of image is under 500".format(
+                    self.imgQuantity))
+            self.msg.show()
+            return
+        if QFileInfo.exists(self.filePath + '/classify.csv'):
+            self.msg.setText('have file named classify.csv. it will be loaded')
+            self.msg.show()
+            with open(self.filePath + '/classify.csv') as csvFile:
+                csv_reader = csv.reader(csvFile, delimiter=',')
+                for row in csv_reader:
+                    self.classifyResultSet[row[1]] = bool(row[2])
+        else:
+            self.msg.setText('Did not find csv file, classify begin')
+            self.msg.show()
         self.showClassifyChart()
 
     def getImuPath(self):
@@ -173,7 +193,7 @@ class MainWindow(QMainWindow):
 
     def ImuDataAnalysis(self):
         self.imu.processImuData()
-
+        # Acc
         chartAcc, seriesAcc = [], []
         chartViewAcc = [self.ui.chartViewAcc1, self.ui.chartViewAcc2, self.ui.chartViewAcc3]
         for i in range(3):
@@ -206,6 +226,75 @@ class MainWindow(QMainWindow):
             seriesAcc[i].attachAxis(axisY)
             chartViewAcc[i].setChart(chartAcc[i])
             chartViewAcc[i].setRenderHint(QPainter.Antialiasing)
+        # end of ACC
+        # gyro
+        chartGyro, seriesGyro = [], []
+        chartViewGyro = [self.ui.chartViewGyro1, self.ui.chartViewGyro2, self.ui.chartViewGyro3]
+        for i in range(3):
+            chartGyro.append(QtCharts.QChart())
+            seriesGyro.append(QtCharts.QLineSeries())
+        # # add data
+        # timestamp = QTime()
+        # dateTime = QDateTime()
+        for i in range(len(self.imu.gyro)):
+            timestamp.setHMS(self.imu.timestamp[i][0], self.imu.timestamp[i][1], self.imu.timestamp[i][2])
+            dateTime.setTime(timestamp)
+            for j in range(3):
+                seriesGyro[j].append(dateTime.toMSecsSinceEpoch(), self.imu.gyro[i][j])
+        for i in range(3):
+            chartGyro[i].legend().hide()
+            chartGyro[i].addSeries(seriesGyro[i])
+            # X axis setting
+            axisX = QtCharts.QDateTimeAxis()
+            axisX.setTickCount(10)
+            axisX.setFormat("HH:mm:ss")
+            axisX.setTitleText("Time")
+            chartGyro[i].addAxis(axisX, Qt.AlignBottom)
+            seriesGyro[i].attachAxis(axisX)
+            # Y axis setting
+            axisY = QtCharts.QValueAxis()
+            axisY.setTickCount(1)
+            axisY.setLabelFormat('%i')
+            axisY.setTitleText('gyro ' + str(i + 1))
+            chartGyro[i].addAxis(axisY, Qt.AlignLeft)
+            seriesGyro[i].attachAxis(axisY)
+            chartViewGyro[i].setChart(chartGyro[i])
+            chartViewGyro[i].setRenderHint(QPainter.Antialiasing)
+        # end of gyro
+        # Mag
+        chartMag, seriesMag = [], []
+        chartViewMag = [self.ui.chartViewMag1, self.ui.chartViewMag2, self.ui.chartViewMag3]
+        for i in range(3):
+            chartMag.append(QtCharts.QChart())
+            seriesMag.append(QtCharts.QLineSeries())
+        # # add data
+        # timestamp = QTime()
+        # dateTime = QDateTime()
+        for i in range(len(self.imu.mag)):
+            timestamp.setHMS(self.imu.timestamp[i][0], self.imu.timestamp[i][1], self.imu.timestamp[i][2])
+            dateTime.setTime(timestamp)
+            for j in range(3):
+                seriesMag[j].append(dateTime.toMSecsSinceEpoch(), self.imu.mag[i][j])
+        for i in range(3):
+            chartMag[i].legend().hide()
+            chartMag[i].addSeries(seriesMag[i])
+            # X axis setting
+            axisX = QtCharts.QDateTimeAxis()
+            axisX.setTickCount(10)
+            axisX.setFormat("HH:mm:ss")
+            axisX.setTitleText("Time")
+            chartMag[i].addAxis(axisX, Qt.AlignBottom)
+            seriesMag[i].attachAxis(axisX)
+            # Y axis setting
+            axisY = QtCharts.QValueAxis()
+            axisY.setTickCount(1)
+            axisY.setLabelFormat('%i')
+            axisY.setTitleText('Mag ' + str(i + 1))
+            chartMag[i].addAxis(axisY, Qt.AlignLeft)
+            seriesMag[i].attachAxis(axisY)
+            chartViewMag[i].setChart(chartMag[i])
+            chartViewMag[i].setRenderHint(QPainter.Antialiasing)
+        # end of Mag
 
 
 if __name__ == '__main__':

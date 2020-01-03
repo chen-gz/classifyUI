@@ -254,7 +254,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -353,30 +353,126 @@
      <attribute name="title">
       <string>gyro</string>
      </attribute>
-     <widget class="QGraphicsView" name="chartViewGyro">
+     <widget class="QTabWidget" name="tabWidget_3">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>821</width>
-        <height>281</height>
+        <width>811</width>
+        <height>271</height>
        </rect>
       </property>
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
+      <widget class="QWidget" name="tab_9">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewGyro1">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>821</width>
+          <height>251</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_10">
+       <attribute name="title">
+        <string>Page</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewGyro2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>811</width>
+          <height>241</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_11">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewGyro3">
+        <property name="geometry">
+         <rect>
+          <x>-10</x>
+          <y>0</y>
+          <width>821</width>
+          <height>251</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_5">
      <attribute name="title">
       <string>mag</string>
      </attribute>
-     <widget class="QGraphicsView" name="chartViewMag">
+     <widget class="QTabWidget" name="tabWidget_4">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>821</width>
-        <height>281</height>
+        <width>811</width>
+        <height>271</height>
        </rect>
       </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab_12">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewMag1">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>821</width>
+          <height>251</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_13">
+       <attribute name="title">
+        <string>Page</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewMag2">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>811</width>
+          <height>241</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_14">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <widget class="QGraphicsView" name="chartViewMag3">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>821</width>
+          <height>251</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </widget>
    </widget>
