@@ -173,14 +173,12 @@ class MainWindow(QMainWindow):
 
     def ImuDataAnalysis(self):
         self.imu.processImuData()
+
         chartAcc, seriesAcc = [], []
-        chartView = [self.ui.chartViewAcc1,self.ui.chartViewAcc2,self.ui.chartViewAcc3]
+        chartViewAcc = [self.ui.chartViewAcc1, self.ui.chartViewAcc2, self.ui.chartViewAcc3]
         for i in range(3):
             chartAcc.append(QtCharts.QChart())
             seriesAcc.append(QtCharts.QLineSeries())
-        # seriesAcc[0].setColor(QColor(255, 0, 0))
-        # seriesAcc[1].setColor(QColor(0, 255, 0))
-        # seriesAcc[2].setColor(QColor(0, 0, 255))
         # add data
         timestamp = QTime()
         dateTime = QDateTime()
@@ -203,11 +201,11 @@ class MainWindow(QMainWindow):
             axisY = QtCharts.QValueAxis()
             axisY.setTickCount(1)
             axisY.setLabelFormat('%i')
-            axisY.setTitleText('acc ' + str(i+1))
-            chartAcc[i].addAxis(axisY,Qt.AlignLeft)
+            axisY.setTitleText('acc ' + str(i + 1))
+            chartAcc[i].addAxis(axisY, Qt.AlignLeft)
             seriesAcc[i].attachAxis(axisY)
-            chartView[i].setChart(chartAcc[i])
-            chartView[i].setRenderHint(QPainter.Antialiasing)
+            chartViewAcc[i].setChart(chartAcc[i])
+            chartViewAcc[i].setRenderHint(QPainter.Antialiasing)
 
 
 if __name__ == '__main__':
