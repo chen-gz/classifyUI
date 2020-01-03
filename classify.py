@@ -25,8 +25,6 @@ class classify:
         # self.resnet.cuda()
 
     def getClass(self, path, name):
-
-        csv = open(path + '/classify.csv', 'w')
         # preprocess
         # print(path)
         # print(path + '/' + name)
@@ -34,7 +32,6 @@ class classify:
         img_t = self.transform(img)
         batch_t = torch.unsqueeze(img_t, 0)
         # batch_t = batch_t.cuda(non_blocking=True)
-        csv.write(path + '/' + name + ' ,' + name+' ,')
 
         # get answer
         out = self.resnet(batch_t)
@@ -45,8 +42,15 @@ class classify:
         for idx in indices[0][:5]:
             if self.food_labels.get(int(idx)) != None:
                 have_food = True
-        if have_food:
-            csv.write('1\n')
-        else:
-            csv.write('0\n')
         return have_food
+
+    def getAllClass(self, path, names):
+        csv = csv = open(path + '/classify.csv', 'w')
+        for name in names:
+            csv.write(path + '/' + name + ',' + name + '    ,')
+            have_food = self.getClass(path, name)
+            if have_food:
+                csv.write('1\n')
+            else:
+                csv.write('0\n')
+        csv.close()

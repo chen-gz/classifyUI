@@ -1,5 +1,4 @@
-from PySide2 import QtCore
-from PySide2.QtCore import Qt, QTime, QDateTime, QFileInfo
+from PySide2.QtCore import Qt, QTime, QDateTime, QFileInfo, QThread, SIGNAL
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog, QMessageBox
 from PySide2.QtGui import QPixmap, QPainter
 from PySide2.QtCharts import QtCharts
@@ -10,6 +9,17 @@ from main_window import Ui_MainWindow
 import logging
 import os
 from classify import classify
+
+
+class classifyBackground(QThread):
+    def __init__(self, path, names):
+        QThread.__init__(self)
+        self.path = path
+        self.names = names
+        self.classifier = classify()
+
+    def run(self):
+        self.classifier.getAllClass(self.path, self.names)
 
 
 class MainWindow(QMainWindow):
@@ -69,7 +79,7 @@ class MainWindow(QMainWindow):
         for i in range(len(self.images)):
             w, h = self.imgLabels[i].width(), self.imgLabels[i].height()
             self.imgLabels[i].setPixmap(
-                self.images[i].scaled(w, h, QtCore.Qt.KeepAspectRatio))
+                self.images[i].scaled(w, h, Qt.KeepAspectRatio))
         logging.info("move image to image label (show image success)")
         # clear useless table
         if len(self.images) < self.uiImageSize:
@@ -161,10 +171,12 @@ class MainWindow(QMainWindow):
             self.classifyResult = []
             self.classifyResultSet = {}
             self.images = []
-            self.names = []
 
         # TODO: preload function should be move (other place). Maybe use new thread.
         self.preload()
+
+    def done(self):
+        self.ui.statusLabel.setText("Done! Result save in path + classify.csv")
 
     def analysis(self):
         # TODO: judgement folder size
@@ -182,10 +194,19 @@ class MainWindow(QMainWindow):
                 csv_reader = csv.reader(csvFile, delimiter=',')
                 for row in csv_reader:
                     self.classifyResultSet[row[1]] = bool(row[2])
+            self.showClassifyChart()
         else:
-            self.msg.setText('Did not find csv file, classify begin')
+            self.msg.setText('csv file not found, classify begin')
             self.msg.show()
-        self.showClassifyChart()
+            # self.classifier.getAllClass(self.filePath, self.names)
+            self.ui.analysisButton.setEnabled(False)
+            self.classifyThread = classifyBackground(self.path, self.names)
+            self.connect(self.classifyThread, SIGNAL('finished()'), self.done)
+            self.classifyThread.start()
+    def classifyDone(self):
+        self.msg.setText('classification finished, show the result press analysis again')
+        self.ui.analysisButton.setEnabled(True)
+        self.msg.show()
 
     def getImuPath(self):
         fileName = QFileDialog.getOpenFileName(self, 'imu data', '', '*.hex')
