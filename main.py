@@ -22,6 +22,14 @@ class classifyBackground(QThread):
         self.classifier.getAllClass(self.path, self.names)
 
 
+# class loadImageBackground(QThread):
+#     def __init__(self):
+#         QThread.__init__(self)
+#
+#     def run(self):
+#         return
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -203,6 +211,7 @@ class MainWindow(QMainWindow):
             self.classifyThread = classifyBackground(self.path, self.names)
             self.connect(self.classifyThread, SIGNAL('finished()'), self.done)
             self.classifyThread.start()
+
     def classifyDone(self):
         self.msg.setText('classification finished, show the result press analysis again')
         self.ui.analysisButton.setEnabled(True)
