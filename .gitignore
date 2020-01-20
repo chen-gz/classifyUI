@@ -13,3 +13,10 @@
 /classifyResult.png
 /.idea/
 /__pycache__/
+/eButton_data/
+train2017/
+train2017 (1).zip
+annotations/
+annotations_trainval2017.zip
+cocoapi/
+/.vscode/
