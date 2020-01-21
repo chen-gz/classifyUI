@@ -16,10 +16,12 @@ class classify:
                 mean=[0.485, 0.456, 0.406],
                 std=[0.229, 0.224, 0.225]
             )])
-        with open('./labels.json') as f: labels = json.load(f)
+        with open('./labels.json') as f:
+            labels = json.load(f)
         with open('./food.json') as f:
             food_labels = json.load(f)
-            self.food_labels = {int(key): value for key, value in food_labels.items()}
+            self.food_labels = {int(key): value for key,
+                                value in food_labels.items()}
         self.resnet = models.resnet34(pretrained=True)
         self.resnet.eval()
         # self.resnet.cuda()
