@@ -22,7 +22,9 @@ class classify:
             food_labels = json.load(f)
             self.food_labels = {int(key): value for key,
                                 value in food_labels.items()}
-        self.resnet = models.resnet34(pretrained=True)
+        self.resnet = models.resnet34(pretrained=False)
+        self.resnet.load_state_dict(torch.load('./resnet34.pth'))
+
         self.resnet.eval()
         # self.resnet.cuda()
 

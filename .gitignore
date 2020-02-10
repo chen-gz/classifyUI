@@ -20,3 +20,9 @@ annotations/
 annotations_trainval2017.zip
 cocoapi/
 /.vscode/
+./eButton_data/
+./eButton_data_old/
+/clarifai/
+eButton_Data/
+/eButton_data_old
+result3.csv
